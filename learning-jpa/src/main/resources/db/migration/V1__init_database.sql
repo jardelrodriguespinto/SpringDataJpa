@@ -13,4 +13,4 @@ CREATE TABLE hibernate_sequence (
 
 INSERT INTO hibernate_sequence values (1);
 
-INSERT INTO order_header values (1, 'João Pedro');
+INSERT INTO order_header(id, customer_name) VALUES(1, 'João');

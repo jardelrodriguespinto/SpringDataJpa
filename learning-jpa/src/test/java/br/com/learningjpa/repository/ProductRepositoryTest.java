@@ -28,4 +28,12 @@ public class ProductRepositoryTest
 
         assertThat(product).isNotNull();
     }
+
+    @Test
+    void testGetByCategory(){
+        Product product = productRepository.findByDescription("PRODUCT1");
+
+        assertThat(product).isNotNull();
+    }
+
 }

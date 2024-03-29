@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -49,14 +50,23 @@ import java.sql.Timestamp;
     })
 public class OrderHeader extends BaseEntity
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String customerName;
     @Embedded
     private Address shippingAddress;
     @Embedded
     private Address billToAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
+    @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
+    private Set<OrderLine> orderLines;
+    @ManyToOne
+    private Customer customer;
+
+    public void addOrderLine(OrderLine orderLine)
+    {
+        if (orderLines == null)
+            orderLines = new HashSet<>();
+
+        orderLines.add(orderLine);
+        orderLine.setOrderHeader(this);
+    }
 }
