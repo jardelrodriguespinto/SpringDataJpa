@@ -56,10 +56,13 @@ public class OrderHeader extends BaseEntity
     private Address billToAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
-    @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<OrderLine> orderLines;
     @ManyToOne
     private Customer customer;
+
+    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private OrderApproval orderApproval;
 
     public void addOrderLine(OrderLine orderLine)
     {
