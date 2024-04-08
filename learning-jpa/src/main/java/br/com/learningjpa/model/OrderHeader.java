@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -56,12 +58,14 @@ public class OrderHeader extends BaseEntity
     private Address billToAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
-    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<OrderLine> orderLines;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
     @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @Fetch(FetchMode.SELECT)
     private OrderApproval orderApproval;
 
     public void addOrderLine(OrderLine orderLine)
