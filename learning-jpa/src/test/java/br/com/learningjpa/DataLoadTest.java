@@ -42,6 +42,20 @@ public class DataLoadTest {
 
         System.out.println("Order id = " +  o1.getId());
         System.out.println("Order id = " +  o1.getCustomer().getName());
+    }
+
+    @Test
+    void testeDBlock(){
+        Long id = 1L;
+
+        OrderHeader oH = orderHeaderRepository.findById(id).get();
+
+        Address billTo = new Address();
+        billTo.setAddress("Bill me");
+        oH.setBillToAddress(billTo);
+        orderHeaderRepository.saveAndFlush(oH);
+
+        System.out.println("I updated the order");
 
 
 

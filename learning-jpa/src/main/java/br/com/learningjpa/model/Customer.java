@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -36,6 +37,8 @@ public class Customer extends BaseEntity
     private Address address;
     private String phone;
     private String email;
+    @Version
+    private Integer version;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Set<OrderHeader> orderHeaders;
+    private Set<OrderHeader> orderHeaders = new HashSet<>();
 }
