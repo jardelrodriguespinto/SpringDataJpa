@@ -1,9 +1,11 @@
 package br.com.learningjpa.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,11 +34,15 @@ import java.util.Set;
 })
 public class Customer extends BaseEntity
 {
+    @Length(max = 100)
     private String name;
+    @Valid
     @Embedded
     private Address address;
-    private String phone;
     private String email;
+    @Length(max = 50)
+    @Length(max = 255)
+    private String phone;
     @Version
     private Integer version;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
